@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <% include templates/head.ejs %>
+   </head>
+
+   <body id="<%= pageID %>">
+      <h1>Arduino Test Interface</h1>
+   </body>
+
+   <% include templates/script.ejs %>
+   <script>
+      console.log($().jquery);
+   </script>
+
+</html>
