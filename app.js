@@ -11,6 +11,7 @@ app.set('port', process.env.PORT || 3000);
 app.set('view engine', 'ejs');
 
 app.use(require('./routes/index'));
+app.use(require('./routes/uno'));
 app.use('/jquery', express.static('./node_modules/jquery/dist'));
 app.use(express.static('./public'));
 
