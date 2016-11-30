@@ -1,0 +1,10 @@
+.graph_label {
+   font-weight: bold;
+   margin: 0px 20px;
+}
+
+.line {
+   fill: none;
+   stroke: #000;
+   stroke-width: 1.5px;
+}

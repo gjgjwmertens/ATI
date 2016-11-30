@@ -14,19 +14,19 @@ Array.prototype.average = Array.prototype.average || function () {
 
 var ws = new WebSocket('ws://20.0.0.112:3030');
 var currentValues = {
-   'a0': {raw: null, avg: [0, 0, 0, 0, 0], avgValue: 0}
+   'a0': {raw: null, avg: [0, 0, 0, 0, 0], avgValue: 0},
+   'a1': {raw: null, avg: [0, 0, 0, 0, 0], avgValue: 0},
+   'a2': {raw: null, avg: [0, 0, 0, 0, 0], avgValue: 0}
 };
 
 ws.onopen = function () {
-   $('#websocket_conn_status_field_id').text('Connected');
-   $('#websocket_conn_status_field_id').css('color', 'green');
-   $('#websocket_status_led_id').css('background-color', 'greenyellow');
+   $('#websocket_conn_status_container_id').removeClass('websocket-not-connected');
+   $('#websocket_conn_status_container_id').addClass('websocket-connected');
 };
 
 ws.onclose = function () {
-   $('#websocket_conn_status_field_id').text('Disconnected');
-   $('#websocket_conn_status_field_id').css('color', 'red');
-   $('#websocket_status_led_id').css('background-color', 'red');
+   $('#websocket_conn_status_container_id').removeClass('websocket-connected');
+   $('#websocket_conn_status_container_id').addClass('websocket-not-connected');
 };
 
 ws.onmessage = function (payload) {

@@ -3,16 +3,34 @@
    <head>
       <% include templates/head.ejs %>
       <link rel="stylesheet" type="text/css" href="css/uno.css">
+      <link rel="stylesheet" type="text/css" href="css/d3_graph.css">
    </head>
    <body id="<%= pageID %>">
-      <h1>Arduino Uno Interface</h1>
-      <div id="websocket_conn_status_container_id">
-         <span id="websocket_conn_status_field_id" class="ws-status-field">Disconnected</span> <div id="websocket_status_led_id"></div>
-         <button id="ws_close_btn_id">Close</button>
-      </div>
-      <div id="status_graph_container_id">
-         <div id="a0_graph_label_id" class="graph_label">A0</div>
-         <svg id="a0_graph_container_id" width="480" height="250"></svg>
+      <% include templates/nav.ejs %>
+      <div class="container">
+         <div class="row">
+            <div class="h1">Arduino Uno Interface</div>
+         </div>
+         <div class="row">
+            <div class="col-lg-6">
+               <div id="a0_status_graph_container_id">
+                  <div id="a0_graph_label_id" class="graph_label">A0</div>
+                  <svg id="a0_graph_container_id" width="480" height="250"></svg>
+               </div>
+            </div>
+            <div class="col-lg-6">
+               <div id="a1_status_graph_container_id">
+                  <div id="a1_graph_label_id" class="graph_label">A1</div>
+                  <svg id="a1_graph_container_id" width="480" height="250"></svg>
+               </div>
+            </div>
+            <div class="col-lg-6">
+               <div id="a2_status_graph_container_id">
+                  <div id="a2_graph_label_id" class="graph_label">A2</div>
+                  <svg id="a2_graph_container_id" width="480" height="250"></svg>
+               </div>
+            </div>
+         </div>
       </div>
    </body>
 
@@ -62,7 +80,27 @@
          line: null,
          x: null,
          y: null,
-         scale_y: {min: -1, max: 1},
+         scale_y: {min: 0, max: 1024},
+         margin: {top: 20, right: 20, bottom: 20, left: 40}
+      });
+      createGraph('a1', {
+         n: 100,
+         data: [],
+         duration: 100,
+         line: null,
+         x: null,
+         y: null,
+         scale_y: {min: 0, max: 1024},
+         margin: {top: 20, right: 20, bottom: 20, left: 40}
+      });
+      createGraph('a2', {
+         n: 100,
+         data: [],
+         duration: 100,
+         line: null,
+         x: null,
+         y: null,
+         scale_y: {min: 0, max: 1024},
          margin: {top: 20, right: 20, bottom: 20, left: 40}
       });
 //      createGraph('emf');
