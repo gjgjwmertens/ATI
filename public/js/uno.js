@@ -14,9 +14,7 @@ Array.prototype.average = Array.prototype.average || function () {
 
 var ws = new WebSocket('ws://20.0.0.112:3030');
 var currentValues = {
-   'a0': {raw: null, avg: [0, 0, 0, 0, 0], avgValue: 0},
-   'a1': {raw: null, avg: [0, 0, 0, 0, 0], avgValue: 0},
-   'a2': {raw: null, avg: [0, 0, 0, 0, 0], avgValue: 0}
+   'a0': {raw: {data: 0}, avg: [0, 0, 0, 0, 0], avgValue: 0}
 };
 
 ws.onopen = function () {
@@ -108,41 +106,67 @@ function updateStatus(data) {
 
    if (data.item) {
       currentValues[data.item].raw = data;
-      $('#' + data.item + '_value_status_cell_id').text(data.value);
-      $('#' + data.item + '_data_status_cell_id').text(data.data);
-      $('#' + data.item + '_updated_status_cell_id').text(data.time);
 
-      switch (data.item) {
-         case 'potentiometer':
-            currentValues[data.item].avg.push(data.value);
-            currentValues[data.item].avg.shift();
-            currentValues[data.item].avgValue = currentValues[data.item].avg.average();
-            break;
+      currentValues[data.item].avg.push(data.data);
+      currentValues[data.item].avg.shift();
+      currentValues[data.item].avgValue = currentValues[data.item].avg.average();
 
-         default:
-            currentValues[data.item].avg.push(data.data);
-            currentValues[data.item].avg.shift();
-            currentValues[data.item].avgValue = currentValues[data.item].avg.average();
-            break;
+      $('#' + data.item + '_current_value_field_id').text('(' + temp(data.data) + ')');
+   }
+}
+
+function temp(raw) {
+   var r, t;
+
+   r = Math.log(10000 * (1024 / (1024 - (raw - 400))));
+   t = 1 / (0.001129148 + (0.000234125 + (0.0000000876741 * r * r)) * r);
+   return Math.round10(t - 273.15, -1);
+}
+// Closure
+(function() {
+   /**
+    * Decimal adjustment of a number.
+    *
+    * @param {String}  type  The type of adjustment.
+    * @param {Number}  value The number.
+    * @param {Integer} exp   The exponent (the 10 logarithm of the adjustment base).
+    * @returns {Number} The adjusted value.
+    */
+   function decimalAdjust(type, value, exp) {
+      // If the exp is undefined or zero...
+      if (typeof exp === 'undefined' || +exp === 0) {
+         return Math[type](value);
       }
+      value = +value;
+      exp = +exp;
+      // If the value is not a number or the exp is not an integer...
+      if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+         return NaN;
+      }
+      // Shift
+      value = value.toString().split('e');
+      value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+      // Shift back
+      value = value.toString().split('e');
+      return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
    }
 
-   console.log(currentValues);
-   // var motorV = parseInt(currentValues['motorFeedback'].data),
-   //    pwmV = parseInt(currentValues['motorPower'].data) - motorV;
-   //
-   // var emf = (motorV - (pwmV * 16)) / 4;
-   // console.log({
-   //    location: 'control.js::updateStatus (emf): ',
-   //    emf: emf,
-   //    pwmV: (pwmV * (5 / 1024)),
-   //    motorV: motorV
-   // });
-   // currentValues['emf'].data = emf;
-}
-
-function updateItemValue(data) {
-   console.log('control.js::updateItemValue (data): ' + data);
-   $('#item_5_current_value_field_id').text(data.value);
-   $('#item_5_updated_field_id').text(data.time);
-}
+   // Decimal round
+   if (!Math.round10) {
+      Math.round10 = function(value, exp) {
+         return decimalAdjust('round', value, exp);
+      };
+   }
+   // Decimal floor
+   if (!Math.floor10) {
+      Math.floor10 = function(value, exp) {
+         return decimalAdjust('floor', value, exp);
+      };
+   }
+   // Decimal ceil
+   if (!Math.ceil10) {
+      Math.ceil10 = function(value, exp) {
+         return decimalAdjust('ceil', value, exp);
+      };
+   }
+})();

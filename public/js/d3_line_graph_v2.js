@@ -64,7 +64,7 @@ function updateGraph() {
    var graph = graphs[id];
 
    // Push a new point onto the back.
-   graph.data.push(currentValues[id].avgValue);
+   graph.data.push(currentValues[id].raw.data);
 
    // Redraw the line.
    d3.select(this)

@@ -8,3 +8,8 @@
    stroke: #000;
    stroke-width: 1.5px;
 }
+
+.graph-current-value {
+   display: inline-block;
+   font-size: 75%;
+}

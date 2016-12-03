@@ -15,19 +15,8 @@
             <div class="col-lg-6">
                <div id="a0_status_graph_container_id">
                   <div id="a0_graph_label_id" class="graph_label">A0</div>
+                  <div id="a0_current_value_field_id" class="graph-current-value">()</div>
                   <svg id="a0_graph_container_id" width="480" height="250"></svg>
-               </div>
-            </div>
-            <div class="col-lg-6">
-               <div id="a1_status_graph_container_id">
-                  <div id="a1_graph_label_id" class="graph_label">A1</div>
-                  <svg id="a1_graph_container_id" width="480" height="250"></svg>
-               </div>
-            </div>
-            <div class="col-lg-6">
-               <div id="a2_status_graph_container_id">
-                  <div id="a2_graph_label_id" class="graph_label">A2</div>
-                  <svg id="a2_graph_container_id" width="480" height="250"></svg>
                </div>
             </div>
          </div>
@@ -39,40 +28,6 @@
    <script src="js/uno.js"></script>
    <script src="js/d3_line_graph_v2.js"></script>
    <script>
-
-//      var graphs = {
-//         potentiometer: {
-//            n: 100,
-//            data: [],
-//            duration: 100,
-//            line: null,
-//            x: null,
-//            y: null,
-//            scale_y: {min: -1, max: 1},
-//            margin: {top: 20, right: 20, bottom: 20, left: 40}
-//         },
-//         emf: {
-//            n: 100,
-//            data: [],
-//            duration: 100,
-//            line: null,
-//            x: null,
-//            y: null,
-//            scale_y: {min: 0, max: 255},
-//            margin: {top: 20, right: 20, bottom: 20, left: 40}
-//         },
-//         motorPower: {
-//            n: 100,
-//            data: [],
-//            duration: 100,
-//            line: null,
-//            x: null,
-//            y: null,
-//            scale_y: {min: 0, max: 150},
-//            margin: {top: 20, right: 20, bottom: 20, left: 40}
-//         }
-//      };
-//
       createGraph('a0', {
          n: 100,
          data: [],
@@ -83,27 +38,5 @@
          scale_y: {min: 0, max: 1024},
          margin: {top: 20, right: 20, bottom: 20, left: 40}
       });
-      createGraph('a1', {
-         n: 100,
-         data: [],
-         duration: 100,
-         line: null,
-         x: null,
-         y: null,
-         scale_y: {min: 0, max: 1024},
-         margin: {top: 20, right: 20, bottom: 20, left: 40}
-      });
-      createGraph('a2', {
-         n: 100,
-         data: [],
-         duration: 100,
-         line: null,
-         x: null,
-         y: null,
-         scale_y: {min: 0, max: 1024},
-         margin: {top: 20, right: 20, bottom: 20, left: 40}
-      });
-//      createGraph('emf');
-//      createGraph('motorPower');
    </script>
 </html>
